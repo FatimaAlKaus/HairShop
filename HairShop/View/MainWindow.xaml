@@ -4,10 +4,63 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HairShop"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         DataContext="{Binding Path=MainViewModel, Source={StaticResource VML}}">
     <Grid>
-        <Button Content="{Binding Prop}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition  Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Grid.Row="0" Grid.ColumnSpan="2">
+
+        </Grid>
+        <Grid Grid.RowSpan="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Command="{Binding ShowProductList}" Content="Список товаров" MinHeight="100"/>
+            <Button Grid.Row="1" Content="Акции" MinHeight="100"/>
+            <Button Grid.Row="2" Content="Корзина" MinHeight="100"/>
+            <Button Grid.Row="3" Command="{Binding AddRandomProduct}" Content="Добавить продукт" MinHeight="100"/>
+        </Grid>
+        <Grid Cursor="Hand" Grid.Row="0" Grid.Column="2" MouseDown="Grid_MouseDown" Background="Transparent"></Grid>
+        <materialDesign:PackIcon Margin="2" Height="25" Width="auto" Kind="Close" HorizontalAlignment="Right" Grid.Column="2">
+
+        </materialDesign:PackIcon>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <ListView ItemsSource="{Binding Products}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <Image MaxHeight="200" Source="/View/blush-yb-Annbeauty.jpeg"/>
+                                    <TextBlock Text="{Binding Brand.Name}"/>
+                                <TextBlock Text="{Binding Volume, StringFormat=' {0} мл'}"/>
+                                <TextBlock Text="{Binding Price,StringFormat=' {0} руб'}"/>
+                                </StackPanel>
+                            </materialDesign:Card>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>

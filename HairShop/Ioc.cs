@@ -1,5 +1,6 @@
 ﻿using DLL;
 using DLL.EF;
+using HairShop.View;
 using HairShop.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ namespace HairShop
             ConfigureServices(serviceCollection);
 
             _serviceProvider = serviceCollection.BuildServiceProvider();
-
+            _serviceProvider.GetRequiredService<HairShopDbContext>().Database.EnsureCreated();
 
         }
         public static T Resolve<T>() => _serviceProvider.GetRequiredService<T>();
@@ -35,6 +36,7 @@ namespace HairShop
             services.AddRepositories();
 
             services.AddTransient<MainViewModel>();
+            services.AddTransient<ProductList>();
             services.AddTransient<MainWindow>();
         }
     }
